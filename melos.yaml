@@ -53,14 +53,14 @@ scripts:
        - Requires `clang-format` (can be installed via Brew on MacOS).
        - Requires `swiftformat` (can be installed via Brew on macOS).
   
-  test:select:
+  test:
     run: melos exec -c 1 -- flutter test
     packageFilters:
       dirExists: test
     description: Run `flutter test` for selected packages.
 
   test:all:
-    run: melos run test:select --no-select
+    run: melos run test --no-select
     description: Run all Flutter tests in this project.
 
   coverage:
@@ -77,6 +77,13 @@ scripts:
   generate:
     exec: |
       dart run build_runner build --delete-conflicting-outputs
+    description: |
+      Generate .g.dart files if the package for selected packages.
+    packageFilters:
+      dependsOn: build_runner
+
+  generate:all:
+    run: melos run generate --no-select
     description: |
       Generate .g.dart files if the package for selected packages.
     packageFilters:
