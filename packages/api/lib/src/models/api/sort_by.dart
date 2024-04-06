@@ -21,9 +21,7 @@ class SortBy {
   }
 
   /// Factory method to sort by selling price
-  factory SortBy.sellingPrice(
-    SortDirection? direction,
-  ) {
+  factory SortBy.sellingPrice({SortDirection? direction}) {
     return SortBy._(
       queryParams: [
         _buildSorting(

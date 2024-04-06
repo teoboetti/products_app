@@ -63,6 +63,17 @@ scripts:
     run: melos run test:select --no-select
     description: Run all Flutter tests in this project.
 
+  coverage:
+    run: |
+      melos exec -- rm -rf coverage
+      melos exec -- flutter test --coverage
+      melos exec -- lcov --remove coverage/lcov.info '*.g.dart' -o coverage/lcov.info
+      melos exec -- genhtml coverage/lcov.info --output-directory=coverage/html
+      melos exec -- open coverage/html/index.html
+    packageFilters:
+      dirExists: test
+    description: Generate coverage for the selected package.
+
   generate:
     exec: |
       dart run build_runner build --delete-conflicting-outputs

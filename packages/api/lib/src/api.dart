@@ -14,8 +14,6 @@ abstract class ICatalogApi {
     int? page = 1,
     int? perPage = 30,
     SortBy? sortBy,
-    double? minPrice,
-    double? maxPrice,
   });
 }
 
@@ -36,8 +34,6 @@ class CatalogApi implements ICatalogApi {
     int? page = 1,
     int? perPage = 30,
     SortBy? sortBy,
-    double? minPrice,
-    double? maxPrice,
   }) async {
     try {
       final uri = Uri(
