@@ -15,6 +15,7 @@ class ProductsPageBloc extends Bloc<ProductsPageEvent, ProductsPageState> {
         ) {
     on<ProductsFetchEvent>(_fetchProducts);
     on<ProductsSortByEvent>(_sortBy);
+    on<ProductSearchEvent>(_search);
   }
 
   final GetProducts _getProducts;
@@ -32,7 +33,7 @@ class ProductsPageBloc extends Bloc<ProductsPageEvent, ProductsPageState> {
     Emitter<ProductsPageState> emit,
   ) async {
     try {
-      final isInitial = page == 1;
+      final isInitial = products.isEmpty;
 
       if (!isInitial) {
         emit(
@@ -94,6 +95,39 @@ class ProductsPageBloc extends Bloc<ProductsPageEvent, ProductsPageState> {
         perPage: perPage,
         sortBy: sortBy,
         filterBy: filterBy,
+      );
+
+      products = response;
+
+      emit(
+        ProductsPageLoaded(
+          products: products,
+          reachedMax: response.length < perPage,
+        ),
+      );
+    } catch (e, stackTrace) {
+      emit(
+        ProductsPageLoaded(
+          products: products,
+          error: e,
+        ),
+      );
+      addError(e, stackTrace);
+    }
+  }
+
+  Future<void> _search(
+    ProductSearchEvent event,
+    Emitter<ProductsPageState> emit,
+  ) async {
+    try {
+      page = 1;
+      query = event.query;
+      sortBy = null;
+      filterBy = null;
+
+      final response = await _getProducts.call(
+        query: query,
       );
 
       products = response;

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:api/api.dart';
@@ -97,6 +98,7 @@ class ProductsContent extends StatefulWidget {
 
 class _ProductsContentState extends State<ProductsContent> {
   late final ScrollController _scrollController;
+  Timer? _debounce;
 
   ProductsPageBloc get _pageBloc => context.read<ProductsPageBloc>();
 
@@ -125,6 +127,25 @@ class _ProductsContentState extends State<ProductsContent> {
     return CustomScrollView(
       controller: _scrollController,
       slivers: [
+        SliverToBoxAdapter(
+          child: TextField(
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+            ),
+            onChanged: (value) {
+              if (value.isEmpty) return;
+
+              if (_debounce?.isActive ?? false) _debounce?.cancel();
+              _debounce = Timer(const Duration(milliseconds: 500), () {
+                _pageBloc.add(
+                  ProductSearchEvent(
+                    query: value.toLowerCase(),
+                  ),
+                );
+              });
+            },
+          ),
+        ),
         SliverToBoxAdapter(
           child: Row(
             children: [
@@ -251,6 +272,7 @@ class _ProductsContentState extends State<ProductsContent> {
 
   @override
   void dispose() {
+    _debounce?.cancel();
     _scrollController
       ..removeListener(_onScroll)
       ..dispose();

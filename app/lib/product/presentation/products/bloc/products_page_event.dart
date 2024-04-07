@@ -40,3 +40,16 @@ final class ProductsSortByEvent extends ProductsPageEvent {
         filterBy,
       ];
 }
+
+final class ProductSearchEvent extends ProductsPageEvent {
+  const ProductSearchEvent({
+    required this.query,
+  });
+
+  final String query;
+
+  @override
+  List<Object?> get props => [
+        query,
+      ];
+}
