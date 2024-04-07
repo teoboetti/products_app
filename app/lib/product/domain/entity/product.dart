@@ -34,7 +34,7 @@ class Product extends Equatable {
   }
 
   String get singleInstallment {
-    final installment = (sellingPrice / 3).roundToDouble();
+    final installment = sellingPrice / 3;
 
     return NumberFormat.currency(symbol: r'$').format(installment);
   }

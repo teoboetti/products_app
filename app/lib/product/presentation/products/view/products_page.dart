@@ -10,6 +10,7 @@ import 'package:products_app/product/domain/usecase/get_products.dart';
 import 'package:products_app/product/presentation/products/bloc/products_page_bloc.dart';
 import 'package:products_app/product/presentation/products/components/filter_bottomsheet.dart';
 import 'package:products_app/product/presentation/products/components/order_bottomsheet.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ProductsPage extends StatelessWidget {
   const ProductsPage({
@@ -212,48 +213,53 @@ class _ProductsContentState extends State<ProductsContent> {
           itemBuilder: (context, index) {
             final product = widget.products[index];
 
-            return Column(
-              children: [
-                Card(
-                  clipBehavior: Clip.antiAlias,
-                  elevation: 0,
-                  margin: EdgeInsets.zero,
-                  child: AspectRatio(
-                    aspectRatio: 164 / 195,
-                    child: CachedNetworkImage(
-                      imageUrl: product.image,
+            return GestureDetector(
+              onTap: () {
+                launchUrlString(product.url);
+              },
+              child: Column(
+                children: [
+                  Card(
+                    clipBehavior: Clip.antiAlias,
+                    elevation: 0,
+                    margin: EdgeInsets.zero,
+                    child: AspectRatio(
+                      aspectRatio: 164 / 195,
+                      child: CachedNetworkImage(
+                        imageUrl: product.image,
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 8,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 12,
+                      horizontal: 8,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          product.title,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          product.merchant,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          '${product.fomattedSellingPrice} or',
+                        ),
+                        const Text('3 installments of'),
+                        Text(
+                          product.singleInstallment,
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        product.title,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        product.merchant,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        '${product.fomattedSellingPrice} or',
-                      ),
-                      const Text('3 installments of'),
-                      Text(
-                        product.singleInstallment,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
             );
           },
         ),
