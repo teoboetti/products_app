@@ -19,3 +19,24 @@ final class ProductsFetchEvent extends ProductsPageEvent {
         query,
       ];
 }
+
+final class ProductsSortByEvent extends ProductsPageEvent {
+  const ProductsSortByEvent({
+    this.query,
+    this.sortBy,
+    this.filterBy,
+  });
+
+  final String? query;
+
+  final SortBy? sortBy;
+
+  final FilterBy? filterBy;
+
+  @override
+  List<Object?> get props => [
+        query,
+        sortBy,
+        filterBy,
+      ];
+}

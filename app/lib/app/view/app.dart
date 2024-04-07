@@ -13,10 +13,15 @@ class App extends StatelessWidget {
       child: MaterialApp.router(
         routerConfig: getIt<AppRouter>().routerConfig,
         theme: ThemeData(
+          useMaterial3: true,
           appBarTheme: AppBarTheme(
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           ),
-          useMaterial3: true,
+          bottomSheetTheme: const BottomSheetThemeData(
+            constraints: BoxConstraints(
+              minWidth: double.infinity,
+            ),
+          ),
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,

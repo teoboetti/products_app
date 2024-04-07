@@ -1,3 +1,4 @@
+import 'package:api/api.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:products_app/product/domain/entity/product.dart';
@@ -13,6 +14,7 @@ class ProductsPageBloc extends Bloc<ProductsPageEvent, ProductsPageState> {
           const ProductsPageInitial(),
         ) {
     on<ProductsFetchEvent>(_fetchProducts);
+    on<ProductsSortByEvent>(_sortBy);
   }
 
   final GetProducts _getProducts;
@@ -22,6 +24,8 @@ class ProductsPageBloc extends Bloc<ProductsPageEvent, ProductsPageState> {
   List<Product> products = [];
 
   String? query;
+  SortBy? sortBy;
+  FilterBy? filterBy;
 
   Future<void> _fetchProducts(
     ProductsFetchEvent event,
@@ -43,6 +47,8 @@ class ProductsPageBloc extends Bloc<ProductsPageEvent, ProductsPageState> {
         query: event.query,
         page: page,
         perPage: perPage,
+        sortBy: sortBy,
+        filterBy: filterBy,
       );
 
       if (isInitial) {
@@ -53,6 +59,44 @@ class ProductsPageBloc extends Bloc<ProductsPageEvent, ProductsPageState> {
 
       query = event.query;
       page = page + 1;
+
+      emit(
+        ProductsPageLoaded(
+          products: products,
+          reachedMax: response.length < perPage,
+        ),
+      );
+    } catch (e, stackTrace) {
+      emit(
+        ProductsPageLoaded(
+          products: products,
+          error: e,
+        ),
+      );
+      addError(e, stackTrace);
+    }
+  }
+
+  Future<void> _sortBy(
+    ProductsSortByEvent event,
+    Emitter<ProductsPageState> emit,
+  ) async {
+    try {
+      emit(const ProductsPageInitial());
+
+      page = 1;
+      query = event.query;
+      sortBy = event.sortBy;
+      filterBy = event.filterBy;
+
+      final response = await _getProducts.call(
+        query: query,
+        perPage: perPage,
+        sortBy: sortBy,
+        filterBy: filterBy,
+      );
+
+      products = response;
 
       emit(
         ProductsPageLoaded(

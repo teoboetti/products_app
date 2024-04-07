@@ -1,9 +1,14 @@
+import 'dart:math';
+
+import 'package:api/api.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:products_app/product/domain/entity/product.dart';
 import 'package:products_app/product/domain/usecase/get_products.dart';
 import 'package:products_app/product/presentation/products/bloc/products_page_bloc.dart';
+import 'package:products_app/product/presentation/products/components/filter_bottomsheet.dart';
+import 'package:products_app/product/presentation/products/components/order_bottomsheet.dart';
 
 class ProductsPage extends StatelessWidget {
   const ProductsPage({
@@ -93,6 +98,8 @@ class ProductsContent extends StatefulWidget {
 class _ProductsContentState extends State<ProductsContent> {
   late final ScrollController _scrollController;
 
+  ProductsPageBloc get _pageBloc => context.read<ProductsPageBloc>();
+
   void _onScroll() {
     if (widget.reachedMax) return;
 
@@ -100,10 +107,8 @@ class _ProductsContentState extends State<ProductsContent> {
 
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
-      final bloc = context.read<ProductsPageBloc>();
-
-      bloc.add(
-        ProductsFetchEvent(query: bloc.query),
+      _pageBloc.add(
+        ProductsFetchEvent(query: _pageBloc.query),
       );
     }
   }
@@ -120,6 +125,61 @@ class _ProductsContentState extends State<ProductsContent> {
     return CustomScrollView(
       controller: _scrollController,
       slivers: [
+        SliverToBoxAdapter(
+          child: Row(
+            children: [
+              const Spacer(),
+              ElevatedButton.icon(
+                onPressed: () async {
+                  final filterBy = await showModalBottomSheet<FilterBy?>(
+                    isScrollControlled: true,
+                    isDismissible: false,
+                    context: context,
+                    builder: (_) => const FilterBottomsheet(),
+                  );
+
+                  if (filterBy != null) {
+                    _pageBloc.add(
+                      ProductsSortByEvent(
+                        query: _pageBloc.query,
+                        filterBy: filterBy,
+                      ),
+                    );
+                  }
+                },
+                icon: const Icon(
+                  Icons.filter_list_alt,
+                ),
+                label: const Text('Filtri'),
+              ),
+              ElevatedButton.icon(
+                onPressed: () async {
+                  final sortBy = await showModalBottomSheet<SortBy?>(
+                    isDismissible: false,
+                    context: context,
+                    builder: (_) => const OrderBottomsheet(),
+                  );
+
+                  if (sortBy != null) {
+                    _pageBloc.add(
+                      ProductsSortByEvent(
+                        query: _pageBloc.query,
+                        sortBy: sortBy,
+                      ),
+                    );
+                  }
+                },
+                icon: Transform.rotate(
+                  angle: -pi / 2,
+                  child: const Icon(
+                    Icons.compare_arrows_rounded,
+                  ),
+                ),
+                label: const Text('Ordina'),
+              ),
+            ],
+          ),
+        ),
         SliverGrid.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
