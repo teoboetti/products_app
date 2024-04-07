@@ -15,12 +15,14 @@ class ProductRepository implements IProductRepository {
     int? page = 1,
     int? perPage = 30,
     SortBy? sortBy,
+    FilterBy? filterBy,
   }) async {
     final result = await _api.getCatalog(
       query: query,
       page: page,
       perPage: perPage,
       sortBy: sortBy,
+      filterBy: filterBy,
     );
 
     if (result.found <= 0) {

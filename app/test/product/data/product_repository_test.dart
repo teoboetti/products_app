@@ -4,6 +4,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:products_app/product/data/product_repository.dart';
 import 'package:products_app/product/domain/entity/product.dart';
 
+import '../../mocks/fake_filter_by.dart';
 import '../../mocks/fake_sort_by.dart';
 
 class MockCatalogApi extends Mock implements CatalogApi {}
@@ -15,6 +16,7 @@ void main() {
   setUpAll(
     () {
       registerFallbackValue(FakeSortBy());
+      registerFallbackValue(FakeFilterBy());
 
       mockCatalogApi = MockCatalogApi();
       productRepository = ProductRepository(api: mockCatalogApi);
@@ -56,6 +58,7 @@ void main() {
               page: any<int>(named: 'page'),
               perPage: any<int>(named: 'perPage'),
               sortBy: any<SortBy>(named: 'sortBy'),
+              filterBy: any<FilterBy>(named: 'filterBy'),
             ),
           ).thenAnswer(
             (_) async => const CatalogResponse(
@@ -133,6 +136,7 @@ void main() {
               page: any<int>(named: 'page'),
               perPage: any<int>(named: 'perPage'),
               sortBy: any<SortBy>(named: 'sortBy'),
+              filterBy: any<FilterBy>(named: 'filterBy'),
             ),
           ).thenAnswer(
             (_) async => const CatalogResponse(

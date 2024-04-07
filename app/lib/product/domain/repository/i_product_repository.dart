@@ -7,5 +7,6 @@ abstract class IProductRepository {
     int? page = 1,
     int? perPage = 30,
     SortBy? sortBy,
+    FilterBy? filterBy,
   });
 }

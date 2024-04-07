@@ -14,12 +14,14 @@ class GetProducts {
     int? page = 1,
     int? perPage = 30,
     SortBy? sortBy,
+    FilterBy? filterBy,
   }) async {
     return _repository.getProducts(
       query: query,
       page: page,
       perPage: perPage,
       sortBy: sortBy,
+      filterBy: filterBy,
     );
   }
 }

@@ -8,8 +8,9 @@ void main() {
   });
 
   group('App', () {
-    testWidgets('renders CounterPage', (tester) async {
+    testWidgets('renders App', (tester) async {
       await tester.pumpWidget(const App());
+      await tester.pumpAndSettle();
       expect(find.byType(App), findsOneWidget);
     });
   });
