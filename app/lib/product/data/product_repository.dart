@@ -42,6 +42,7 @@ class ProductRepository implements IProductRepository {
               url: document.url,
               listPrice: document.listPrice,
               sellingPrice: document.sellingPrice,
+              merchant: document.merchant,
             ),
           );
         }

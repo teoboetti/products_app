@@ -39,6 +39,7 @@ void main() {
               url: 'url',
               listPrice: i + 1,
               sellingPrice: i + 2,
+              merchant: '',
             ),
           );
 

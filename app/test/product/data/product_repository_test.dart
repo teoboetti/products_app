@@ -36,6 +36,7 @@ void main() {
               url: 'url1',
               listPrice: 10,
               sellingPrice: 8,
+              merchant: '',
             ),
             const Product(
               id: '2',
@@ -45,6 +46,7 @@ void main() {
               url: 'url2',
               listPrice: 20,
               sellingPrice: 15,
+              merchant: '',
             ),
           ];
 

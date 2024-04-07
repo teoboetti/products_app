@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:intl/intl.dart';
 
 class Product extends Equatable {
   const Product({
@@ -9,6 +10,7 @@ class Product extends Equatable {
     required this.url,
     required this.listPrice,
     required this.sellingPrice,
+    required this.merchant,
   });
 
   final String id;
@@ -25,6 +27,18 @@ class Product extends Equatable {
 
   final double sellingPrice;
 
+  final String merchant;
+
+  String get fomattedSellingPrice {
+    return NumberFormat.currency(symbol: r'$').format(sellingPrice);
+  }
+
+  String get singleInstallment {
+    final installment = (sellingPrice / 3).roundToDouble();
+
+    return NumberFormat.currency(symbol: r'$').format(installment);
+  }
+
   @override
   List<Object?> get props => [
         id,
@@ -34,5 +48,6 @@ class Product extends Equatable {
         url,
         listPrice,
         sellingPrice,
+        merchant,
       ];
 }

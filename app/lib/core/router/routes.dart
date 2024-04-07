@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
-import 'package:products_app/counter/counter.dart';
+import 'package:products_app/product/presentation/products/products.dart';
 
 part 'routes.g.dart';
 
@@ -10,6 +10,6 @@ class HomeRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const CounterPage();
+    return const ProductsPage();
   }
 }
