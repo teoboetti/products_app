@@ -38,7 +38,7 @@ class ProductRepository implements IProductRepository {
               id: document.id,
               image: document.image,
               title: document.title,
-              description: document.title,
+              description: document.description,
               url: document.url,
               listPrice: document.listPrice,
               sellingPrice: document.sellingPrice,

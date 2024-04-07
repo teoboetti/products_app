@@ -9,7 +9,7 @@ class GetProducts {
 
   final IProductRepository _repository;
 
-  Future<List<Product>> getProducts({
+  Future<List<Product>> call({
     String? query,
     int? page = 1,
     int? perPage = 30,
