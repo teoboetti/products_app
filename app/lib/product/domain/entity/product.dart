@@ -30,13 +30,17 @@ class Product extends Equatable {
   final String merchant;
 
   String get fomattedSellingPrice {
-    return NumberFormat.currency(symbol: r'$').format(sellingPrice);
+    return NumberFormat.currency(symbol: '€', locale: 'it')
+        .format(sellingPrice);
   }
 
   String get singleInstallment {
     final installment = sellingPrice / 3;
 
-    return NumberFormat.currency(symbol: r'$').format(installment);
+    return NumberFormat.currency(
+      symbol: '€',
+      locale: 'it',
+    ).format(installment);
   }
 
   @override

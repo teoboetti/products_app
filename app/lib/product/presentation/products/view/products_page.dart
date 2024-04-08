@@ -1,8 +1,6 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:api/api.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:products_app/product/domain/entity/product.dart';
@@ -10,7 +8,8 @@ import 'package:products_app/product/domain/usecase/get_products.dart';
 import 'package:products_app/product/presentation/products/bloc/products_page_bloc.dart';
 import 'package:products_app/product/presentation/products/components/filter_bottomsheet.dart';
 import 'package:products_app/product/presentation/products/components/order_bottomsheet.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:products_app/product/presentation/products/components/product_card.dart';
+import 'package:products_app/product/presentation/products/components/product_search_bar.dart';
 
 class ProductsPage extends StatelessWidget {
   const ProductsPage({
@@ -38,10 +37,7 @@ class ProductsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-      ),
+      appBar: AppBar(),
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(
           horizontal: 16,
@@ -99,7 +95,7 @@ class ProductsContent extends StatefulWidget {
 
 class _ProductsContentState extends State<ProductsContent> {
   late final ScrollController _scrollController;
-  Timer? _debounce;
+  late final TextEditingController _textEditingController;
 
   ProductsPageBloc get _pageBloc => context.read<ProductsPageBloc>();
 
@@ -121,6 +117,7 @@ class _ProductsContentState extends State<ProductsContent> {
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(_onScroll);
+    _textEditingController = TextEditingController();
   }
 
   @override
@@ -129,21 +126,18 @@ class _ProductsContentState extends State<ProductsContent> {
       controller: _scrollController,
       slivers: [
         SliverToBoxAdapter(
-          child: TextField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
-            onChanged: (value) {
-              if (value.isEmpty) return;
+          child: ProductSearchbar(
+            controller: _textEditingController,
+            onTap: () {
+              final text = _textEditingController.text;
 
-              if (_debounce?.isActive ?? false) _debounce?.cancel();
-              _debounce = Timer(const Duration(milliseconds: 500), () {
+              if (text.isNotEmpty) {
                 _pageBloc.add(
                   ProductSearchEvent(
-                    query: value.toLowerCase(),
+                    query: text,
                   ),
                 );
-              });
+              }
             },
           ),
         ),
@@ -213,54 +207,7 @@ class _ProductsContentState extends State<ProductsContent> {
           itemBuilder: (context, index) {
             final product = widget.products[index];
 
-            return GestureDetector(
-              onTap: () {
-                launchUrlString(product.url);
-              },
-              child: Column(
-                children: [
-                  Card(
-                    clipBehavior: Clip.antiAlias,
-                    elevation: 0,
-                    margin: EdgeInsets.zero,
-                    child: AspectRatio(
-                      aspectRatio: 164 / 195,
-                      child: CachedNetworkImage(
-                        imageUrl: product.image,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 12,
-                      horizontal: 8,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          product.title,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          product.merchant,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          '${product.fomattedSellingPrice} or',
-                        ),
-                        const Text('3 installments of'),
-                        Text(
-                          product.singleInstallment,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            );
+            return ProductCard(product: product);
           },
         ),
         if (widget.isLoadingMore)
@@ -278,10 +225,10 @@ class _ProductsContentState extends State<ProductsContent> {
 
   @override
   void dispose() {
-    _debounce?.cancel();
     _scrollController
       ..removeListener(_onScroll)
       ..dispose();
+    _textEditingController.dispose();
     super.dispose();
   }
 }
