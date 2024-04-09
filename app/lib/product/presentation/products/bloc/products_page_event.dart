@@ -7,27 +7,15 @@ sealed class ProductsPageEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-final class ProductsFetchEvent extends ProductsPageEvent {
-  const ProductsFetchEvent({
-    this.query,
-  });
-
-  final String? query;
-
-  @override
-  List<Object?> get props => [
-        query,
-      ];
+final class ProductsMoreEvent extends ProductsPageEvent {
+  const ProductsMoreEvent();
 }
 
-final class ProductsSortByEvent extends ProductsPageEvent {
-  const ProductsSortByEvent({
-    this.query,
+final class ProductsFilterByEvent extends ProductsPageEvent {
+  const ProductsFilterByEvent({
     this.sortBy,
     this.filterBy,
   });
-
-  final String? query;
 
   final SortBy? sortBy;
 
@@ -35,7 +23,6 @@ final class ProductsSortByEvent extends ProductsPageEvent {
 
   @override
   List<Object?> get props => [
-        query,
         sortBy,
         filterBy,
       ];

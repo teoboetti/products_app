@@ -52,7 +52,7 @@ class _ProductsViewState extends State<ProductsView> {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
       _pageBloc.add(
-        ProductsFetchEvent(query: _pageBloc.query),
+        const ProductsMoreEvent(),
       );
     }
   }
@@ -152,8 +152,7 @@ class _ProductsViewState extends State<ProductsView> {
 
                             if (filterBy != null) {
                               _pageBloc.add(
-                                ProductsSortByEvent(
-                                  query: _pageBloc.query,
+                                ProductsFilterByEvent(
                                   filterBy: filterBy,
                                 ),
                               );
@@ -176,8 +175,7 @@ class _ProductsViewState extends State<ProductsView> {
 
                             if (sortBy != null) {
                               _pageBloc.add(
-                                ProductsSortByEvent(
-                                  query: _pageBloc.query,
+                                ProductsFilterByEvent(
                                   sortBy: sortBy,
                                 ),
                               );

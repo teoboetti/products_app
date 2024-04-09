@@ -4,7 +4,7 @@ import 'package:products_app/product/domain/entity/product.dart';
 import 'package:products_app/product/domain/repository/i_product_repository.dart';
 import 'package:products_app/product/domain/usecase/get_products.dart';
 
-import '../../mocks/fake_sort_by.dart';
+import '../../../mocks/fake_sort_by.dart';
 
 class MockProductRepository extends Mock implements IProductRepository {}
 
