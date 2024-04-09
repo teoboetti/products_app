@@ -1,3 +1,4 @@
+import 'package:api/src/models/api/filter_by.dart';
 import 'package:api/src/models/api/sort_by.dart';
 import 'package:api/src/models/catalog/catalog_response.dart';
 import 'package:dio/dio.dart';
@@ -14,6 +15,7 @@ abstract class ICatalogApi {
     int? page = 1,
     int? perPage = 30,
     SortBy? sortBy,
+    FilterBy? filterBy,
   });
 }
 
@@ -34,6 +36,7 @@ class CatalogApi implements ICatalogApi {
     int? page = 1,
     int? perPage = 30,
     SortBy? sortBy,
+    FilterBy? filterBy,
   }) async {
     try {
       final uri = Uri(
@@ -43,6 +46,10 @@ class CatalogApi implements ICatalogApi {
           if (page != null) 'page': '$page',
           if (perPage != null) 'per_page': '$perPage',
           if (sortBy != null) 'sort_by': sortBy.toQueryParameter(),
+          if (filterBy != null) ...{
+            'minPrice': '${filterBy.minPrice}',
+            'maxPrice': '${filterBy.maxPrice}',
+          },
           'partnerId': 'scalapayappit',
           'source': 'trovaprezzi',
           'language': 'it',

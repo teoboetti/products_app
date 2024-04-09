@@ -3,3 +3,4 @@ linter:
   rules:
     one_member_abstracts: false
     unnecessary_lambdas: false
+    lines_longer_than_80_chars: false

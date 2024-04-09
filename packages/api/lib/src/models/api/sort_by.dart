@@ -1,69 +1,48 @@
 import 'package:api/src/models/api/sort_direction.dart';
 import 'package:api/src/models/api/sort_type.dart';
-import 'package:flutter/foundation.dart';
+import 'package:equatable/equatable.dart';
 
 /// Helper class for sortby query
-class SortBy {
+class SortBy extends Equatable {
   const SortBy._({
-    required this.queryParams,
+    required this.type,
+    this.direction,
   });
 
   /// Factory method to sort by text
   factory SortBy.text({SortDirection? direction}) {
     return SortBy._(
-      queryParams: [
-        _buildSorting(
-          SortType.textMatch,
-          direction,
-        ),
-      ],
+      type: SortType.textMatch,
+      direction: direction,
     );
   }
 
   /// Factory method to sort by selling price
   factory SortBy.sellingPrice({SortDirection? direction}) {
     return SortBy._(
-      queryParams: [
-        _buildSorting(
-          SortType.sellingPrice,
-          direction,
-        ),
-      ],
+      type: SortType.sellingPrice,
+      direction: direction,
     );
   }
 
-  /// Factory method to sort by selling price within a range
-  factory SortBy.sellingPriceMinMax({
-    required double minPrice,
-    required double maxPrice,
-    SortDirection? direction,
-  }) {
-    return SortBy._(
-      queryParams: [
-        _buildSorting(
-          SortType.sellingPrice,
-          direction,
-        ),
-        'minPrice=$minPrice',
-        'maxPrice=$maxPrice',
-      ],
-    );
-  }
+  /// type
+  final SortType type;
 
-  /// List of query params
-  @visibleForTesting
-  final List<String> queryParams;
+  /// direction
+  final SortDirection? direction;
 
   /// Method to convert parameters to a query string
   String toQueryParameter() {
-    return queryParams.join('&');
+    if (direction != null) {
+      return '${type.value}:${direction!.name}';
+    } else {
+      return type.value;
+    }
   }
 
-  static String _buildSorting(SortType type, SortDirection? direction) {
-    var sorting = type.value;
-    if (direction != null) {
-      sorting += ':${direction.name}';
-    }
-    return sorting;
-  }
+  @override
+  List<Object?> get props => [
+        type,
+        direction,
+      ];
 }

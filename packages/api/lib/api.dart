@@ -2,6 +2,7 @@
 library;
 
 export 'src/api.dart';
+export 'src/models/api/filter_by.dart';
 export 'src/models/api/sort_by.dart';
 export 'src/models/api/sort_direction.dart';
 export 'src/models/api/sort_type.dart';
