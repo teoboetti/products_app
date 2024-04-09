@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:products_app/colors.dart';
+import 'package:products_app/app_colors.dart';
 
 class ProductSearchbar extends StatefulWidget {
   const ProductSearchbar({
