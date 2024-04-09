@@ -29,6 +29,10 @@ command:
     dev_dependencies:
       build_runner: ^2.4.9
       mocktail: ^1.0.3
+    
+    hooks:
+      post: 
+        melos generate:all
 
 scripts:
   lint:all:
