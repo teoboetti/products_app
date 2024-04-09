@@ -56,9 +56,10 @@ class _ProductSearchbarState extends State<ProductSearchbar> {
             ),
           ),
         ),
-        hintText: 'Cerca',
+        hintText: 'Cerca...',
         hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
               height: 1.5,
+              color: AppColors.disabledText,
             ),
         contentPadding: const EdgeInsets.only(
           left: 16,

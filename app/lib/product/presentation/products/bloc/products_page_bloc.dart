@@ -88,8 +88,8 @@ class ProductsPageBloc extends Bloc<ProductsPageEvent, ProductsPageState> {
 
       page = 1;
       query = event.query;
-      sortBy = event.sortBy;
-      filterBy = event.filterBy;
+      sortBy = event.sortBy ?? sortBy;
+      filterBy = event.filterBy ?? filterBy;
 
       final response = await _getProducts.call(
         query: query,

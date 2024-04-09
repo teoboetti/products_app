@@ -141,8 +141,11 @@ class _ProductsViewState extends State<ProductsView> {
                                 await showModalBottomSheet<FilterBy?>(
                               isScrollControlled: true,
                               isDismissible: false,
+                              enableDrag: false,
                               context: context,
-                              builder: (_) => const FilterBottomsheet(),
+                              builder: (_) => FilterBottomsheet(
+                                filterBy: _pageBloc.filterBy,
+                              ),
                             );
 
                             if (filterBy != null) {
@@ -163,8 +166,11 @@ class _ProductsViewState extends State<ProductsView> {
                           onPressed: () async {
                             final sortBy = await showModalBottomSheet<SortBy?>(
                               isDismissible: false,
+                              enableDrag: false,
                               context: context,
-                              builder: (_) => const OrderBottomsheet(),
+                              builder: (_) => OrderBottomsheet(
+                                sortBy: _pageBloc.sortBy,
+                              ),
                             );
 
                             if (sortBy != null) {
