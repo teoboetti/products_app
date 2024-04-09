@@ -23,6 +23,7 @@ class ProductsPageBloc extends Bloc<ProductsPageEvent, ProductsPageState> {
   int page = 1;
   int perPage = 8;
   List<Product> products = [];
+  bool hasReachedMax = false;
 
   String? query;
   SortBy? sortBy;
@@ -60,11 +61,11 @@ class ProductsPageBloc extends Bloc<ProductsPageEvent, ProductsPageState> {
 
       query = event.query;
       page = page + 1;
+      hasReachedMax = response.length < perPage;
 
       emit(
         ProductsPageLoaded(
           products: products,
-          reachedMax: response.length < perPage,
         ),
       );
     } catch (e, stackTrace) {
@@ -83,7 +84,7 @@ class ProductsPageBloc extends Bloc<ProductsPageEvent, ProductsPageState> {
     Emitter<ProductsPageState> emit,
   ) async {
     try {
-      emit(const ProductsPageInitial());
+      emit(const ProductsPageLoading());
 
       page = 1;
       query = event.query;
@@ -98,11 +99,11 @@ class ProductsPageBloc extends Bloc<ProductsPageEvent, ProductsPageState> {
       );
 
       products = response;
+      hasReachedMax = response.length < perPage;
 
       emit(
         ProductsPageLoaded(
           products: products,
-          reachedMax: response.length < perPage,
         ),
       );
     } catch (e, stackTrace) {
@@ -121,6 +122,8 @@ class ProductsPageBloc extends Bloc<ProductsPageEvent, ProductsPageState> {
     Emitter<ProductsPageState> emit,
   ) async {
     try {
+      emit(const ProductsPageLoading());
+
       page = 1;
       query = event.query;
       sortBy = null;
@@ -131,13 +134,19 @@ class ProductsPageBloc extends Bloc<ProductsPageEvent, ProductsPageState> {
       );
 
       products = response;
+      hasReachedMax = response.length < perPage;
 
-      emit(
-        ProductsPageLoaded(
-          products: products,
-          reachedMax: response.length < perPage,
-        ),
-      );
+      if (products.isNotEmpty) {
+        emit(
+          ProductsPageLoaded(
+            products: products,
+          ),
+        );
+      } else {
+        emit(
+          const ProductsPageEmptySearch(),
+        );
+      }
     } catch (e, stackTrace) {
       emit(
         ProductsPageLoaded(

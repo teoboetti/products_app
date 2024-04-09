@@ -11,17 +11,22 @@ final class ProductsPageInitial extends ProductsPageState {
   const ProductsPageInitial();
 }
 
+final class ProductsPageLoading extends ProductsPageState {
+  const ProductsPageLoading();
+}
+
+final class ProductsPageEmptySearch extends ProductsPageState {
+  const ProductsPageEmptySearch();
+}
+
 final class ProductsPageLoaded extends ProductsPageState {
   const ProductsPageLoaded({
     required this.products,
-    this.reachedMax = false,
     this.isLoadingMore = false,
     this.error,
   });
 
   final List<Product> products;
-
-  final bool reachedMax;
 
   final bool isLoadingMore;
 
@@ -30,7 +35,6 @@ final class ProductsPageLoaded extends ProductsPageState {
   @override
   List<Object?> get props => [
         products,
-        reachedMax,
         isLoadingMore,
         error,
       ];

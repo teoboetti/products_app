@@ -23,6 +23,7 @@ dependencies:
   google_fonts: ^6.2.1
   injectable: ^2.4.1
   intl: ^0.18.1
+  sliver_tools: ^0.2.12
   url_launcher: ^6.2.5
 
 dev_dependencies:
