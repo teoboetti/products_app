@@ -20,7 +20,7 @@ class BottomsheetHeader extends StatelessWidget {
           height: 5,
           width: 45,
           decoration: BoxDecoration(
-            color: AppColors.homeIndicator,
+            color: AppColors.grey600,
             borderRadius: BorderRadius.circular(5),
           ),
         ),

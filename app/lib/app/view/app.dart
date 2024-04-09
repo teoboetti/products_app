@@ -21,21 +21,24 @@ class App extends StatelessWidget {
             constraints: const BoxConstraints(
               minWidth: double.infinity,
             ),
-            backgroundColor: AppColors.backgroundBottomsheet,
+            backgroundColor: AppColors.lightBackground,
           ),
           cardTheme: const CardTheme(
             elevation: 0,
             clipBehavior: Clip.antiAlias,
             margin: EdgeInsets.zero,
           ),
+          iconTheme: IconThemeData(
+            color: AppColors.black,
+          ),
           radioTheme: RadioThemeData(
             fillColor: MaterialStateProperty.resolveWith(
               (states) {
                 if (states.contains(MaterialState.selected)) {
-                  return AppColors.accent;
+                  return AppColors.brand;
                 }
 
-                return AppColors.disabledRadio;
+                return AppColors.lightWeightBrand;
               },
             ),
           ),
@@ -50,14 +53,14 @@ class App extends StatelessWidget {
               backgroundColor: MaterialStateProperty.resolveWith(
                 (states) {
                   if (states.contains(MaterialState.disabled)) {
-                    return AppColors.disabledRadio;
+                    return AppColors.lightWeightBrand;
                   }
 
                   if (states.contains(MaterialState.pressed)) {
-                    return AppColors.accent.withOpacity(0.7);
+                    return AppColors.brand.withOpacity(0.7);
                   }
 
-                  return AppColors.accent;
+                  return AppColors.brand;
                 },
               ),
               foregroundColor: const MaterialStatePropertyAll(
@@ -75,14 +78,14 @@ class App extends StatelessWidget {
               foregroundColor: MaterialStateProperty.resolveWith(
                 (states) {
                   if (states.contains(MaterialState.disabled)) {
-                    return AppColors.disabledRadio;
+                    return AppColors.lightWeightBrand;
                   }
 
                   if (states.contains(MaterialState.pressed)) {
-                    return AppColors.accent.withOpacity(0.7);
+                    return AppColors.brand.withOpacity(0.7);
                   }
 
-                  return AppColors.accent;
+                  return AppColors.brand;
                 },
               ),
             ),

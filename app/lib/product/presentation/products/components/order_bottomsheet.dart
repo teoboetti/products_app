@@ -73,7 +73,7 @@ class _OrderBottomsheetState extends State<OrderBottomsheet> {
                       title: const Text('Prezzo crescente'),
                     ),
                     Divider(
-                      color: AppColors.border,
+                      color: AppColors.border300,
                     ),
                     OrderTile<SortBy>(
                       value: SortBy.sellingPrice(
@@ -84,7 +84,7 @@ class _OrderBottomsheetState extends State<OrderBottomsheet> {
                       title: const Text('Prezzo decrescente'),
                     ),
                     Divider(
-                      color: AppColors.border,
+                      color: AppColors.border300,
                     ),
                     OrderTile<SortBy>(
                       value: SortBy.text(
@@ -95,7 +95,7 @@ class _OrderBottomsheetState extends State<OrderBottomsheet> {
                       title: const Text('Nome A-Z'),
                     ),
                     Divider(
-                      color: AppColors.border,
+                      color: AppColors.border300,
                     ),
                     OrderTile<SortBy>(
                       value: SortBy.text(

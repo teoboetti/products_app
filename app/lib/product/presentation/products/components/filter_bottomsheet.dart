@@ -91,7 +91,7 @@ class _FilterBottomsheetState extends State<FilterBottomsheet> {
                         Container(
                           height: 1,
                           width: 8,
-                          color: AppColors.homeIndicator,
+                          color: AppColors.grey600,
                           margin: const EdgeInsets.symmetric(
                             horizontal: 8,
                           ),
@@ -182,7 +182,7 @@ class FilterTextfield extends StatelessWidget {
   Widget build(BuildContext context) {
     final outlineInputBorder = OutlineInputBorder(
       borderSide: BorderSide(
-        color: AppColors.border,
+        color: AppColors.border300,
       ),
       borderRadius: const BorderRadius.all(
         Radius.circular(10),
@@ -198,7 +198,7 @@ class FilterTextfield extends StatelessWidget {
         label: Text(label),
         labelStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
               height: 1.5,
-              color: AppColors.disabledText,
+              color: AppColors.gray700,
             ),
       ),
       keyboardType: TextInputType.number,

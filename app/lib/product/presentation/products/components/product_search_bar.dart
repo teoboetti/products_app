@@ -21,7 +21,7 @@ class _ProductSearchbarState extends State<ProductSearchbar> {
   Widget build(BuildContext context) {
     final outlineInputBorder = OutlineInputBorder(
       borderSide: BorderSide(
-        color: AppColors.border,
+        color: AppColors.border300,
       ),
       borderRadius: const BorderRadius.all(
         Radius.circular(1000),
@@ -47,7 +47,7 @@ class _ProductSearchbarState extends State<ProductSearchbar> {
             ),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppColors.accent,
+              color: AppColors.brand,
             ),
             child: const Icon(
               Icons.search,
@@ -59,7 +59,7 @@ class _ProductSearchbarState extends State<ProductSearchbar> {
         hintText: 'Cerca...',
         hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
               height: 1.5,
-              color: AppColors.disabledText,
+              color: AppColors.gray700,
             ),
         contentPadding: const EdgeInsets.only(
           left: 16,

@@ -57,21 +57,21 @@ class ProductCard extends StatelessWidget {
                 Text(
                   '${product.fomattedSellingPrice} or',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.disabledText,
+                        color: AppColors.gray700,
                       ),
                 ),
                 Text(
                   '3 installments of',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: AppColors.accent,
+                        color: AppColors.brand,
                       ),
                 ),
                 Text(
                   product.singleInstallment,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: AppColors.accent,
+                        color: AppColors.brand,
                       ),
                 ),
               ],

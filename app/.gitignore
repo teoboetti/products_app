@@ -113,3 +113,4 @@ app.*.map.json
 
 *.g.dart
 *.config.dart
+lib/generated/

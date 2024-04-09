@@ -1,13 +1,13 @@
-import 'dart:math';
-
 import 'package:api/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:products_app/generated/assets.gen.dart';
 import 'package:products_app/product/domain/entity/product.dart';
 import 'package:products_app/product/domain/usecase/get_products.dart';
 import 'package:products_app/product/presentation/products/bloc/products_page_bloc.dart';
 import 'package:products_app/product/presentation/products/components/empty_search.dart';
 import 'package:products_app/product/presentation/products/components/filter_bottomsheet.dart';
+import 'package:products_app/product/presentation/products/components/filter_icon_button.dart';
 import 'package:products_app/product/presentation/products/components/loading.dart';
 import 'package:products_app/product/presentation/products/components/order_bottomsheet.dart';
 import 'package:products_app/product/presentation/products/components/product_card.dart';
@@ -135,7 +135,9 @@ class _ProductsViewState extends State<ProductsView> {
                     child: Row(
                       children: [
                         const Spacer(),
-                        ElevatedButton.icon(
+                        FilterIconButton(
+                          text: 'Filtri',
+                          icon: Assets.icons.filter.svg(),
                           onPressed: () async {
                             final filterBy =
                                 await showModalBottomSheet<FilterBy?>(
@@ -157,12 +159,11 @@ class _ProductsViewState extends State<ProductsView> {
                               );
                             }
                           },
-                          icon: const Icon(
-                            Icons.filter_list_alt,
-                          ),
-                          label: const Text('Filtri'),
                         ),
-                        ElevatedButton.icon(
+                        const SizedBox(width: 8),
+                        FilterIconButton(
+                          icon: Assets.icons.order.svg(),
+                          text: 'Ordina',
                           onPressed: () async {
                             final sortBy = await showModalBottomSheet<SortBy?>(
                               isDismissible: false,
@@ -182,13 +183,6 @@ class _ProductsViewState extends State<ProductsView> {
                               );
                             }
                           },
-                          icon: Transform.rotate(
-                            angle: -pi / 2,
-                            child: const Icon(
-                              Icons.compare_arrows_rounded,
-                            ),
-                          ),
-                          label: const Text('Ordina'),
                         ),
                       ],
                     ),
